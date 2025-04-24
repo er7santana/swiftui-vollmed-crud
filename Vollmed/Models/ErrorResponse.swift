@@ -11,3 +11,7 @@ struct ErrorResponse: Codable {
     let status: Int
     let message: String
 }
+
+struct SecondErrorResponse: Codable {
+    let error: String
+}

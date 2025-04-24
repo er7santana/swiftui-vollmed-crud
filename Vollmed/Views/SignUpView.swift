@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SignUpView: View {
     
+    let service = WebService()
+    
     @Environment(\.dismiss) private var dismiss
     @State private var name: String = ""
     @State private var email: String = ""
@@ -16,6 +18,10 @@ struct SignUpView: View {
     @State private var phoneNumber: String = ""
     @State private var healthPlan: String = ""
     @State private var password: String = ""
+    @State private var showAlert: Bool = false
+    @State private var registered: Bool = false
+    @State private var alertMessage: String = ""
+    @State private var navigateToSignIn: Bool = false
     
     let healthPlans = [
         "Amil",
@@ -120,7 +126,9 @@ struct SignUpView: View {
                 
                 if isFormFilled {
                     Button {
-                        // Handle sign up action
+                        Task {
+                            await register()
+                        }
                     } label: {
                         ButtonView(text: "Cadastrar")
                     }
@@ -141,11 +149,45 @@ struct SignUpView: View {
         .onAppear {
             healthPlan = healthPlans[0]
         }
+        .alert(registered ? "Sucesso" : "Ops, algo deu errado", isPresented: $showAlert) {
+            Button("OK, Entendi") {
+                if registered {
+                    navigateToSignIn = true
+                }
+            }
+        } message: {
+            Text(alertMessage)
+        }
+        .navigationDestination(isPresented: $navigateToSignIn) {
+            SignInView()
+        }
+    }
+    
+    func register() async {
+        registered = false
+        defer { showAlert = true }
+        let patient = Patient(
+            id: nil,
+            cpf: cpf,
+            name: name,
+            email: email,
+            password: password,
+            phoneNumber: phoneNumber,
+            healthPlan: healthPlan,
+        )
+        do {
+            let response = try await service.registerPatient(patient: patient)
+            registered = true
+            alertMessage = "Você já pode fazer login."
+        } catch {
+            alertMessage = error.localizedDescription
+            print(error.localizedDescription)
+        }
     }
 }
 
 #Preview {
-    NavigationView {
+    NavigationStack {
         SignUpView()
     }
 }

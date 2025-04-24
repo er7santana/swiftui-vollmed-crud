@@ -78,7 +78,7 @@ struct SpecialistCardView: View {
 }
 
 #Preview {
-    NavigationView {
+    NavigationStack {
         SpecialistCardView(
             specialist: Specialist.mockItem
         )

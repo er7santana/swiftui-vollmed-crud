@@ -23,6 +23,34 @@ struct WebService {
         return appointments
     }
     
+    func registerPatient(patient: Patient) async throws -> Patient {
+        let endpoint = baseURL + "/paciente"
+        guard let url = URL(string: endpoint) else {
+            throw URLError(.badURL)
+        }
+        
+        let jsonData = try JSONEncoder().encode(patient)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let patientResponse = try JSONDecoder().decode(Patient.self, from: data)
+            return patientResponse
+        } catch {
+            if let errorResponse = try? JSONDecoder().decode(ErrorResponse.self, from: data) {
+                throw NSError(domain: "WebServiceError", code: errorResponse.status, userInfo: [NSLocalizedDescriptionKey: errorResponse.message])
+            } else if let errorResponse = try? JSONDecoder().decode(SecondErrorResponse.self, from: data) {
+                throw NSError(domain: "WebServiceError", code: 400, userInfo: [NSLocalizedDescriptionKey: errorResponse.error])
+            }
+            throw NSError(domain: "WebServiceError", code: 500, userInfo: [NSLocalizedDescriptionKey: "Erro ao efetuar cadastro do paciente"])
+        }
+    }
+    
     func rescheduleAppointment(appointmentId: String, date: String) async throws -> ScheduleAppointmentResponse {
         let endpoint = baseURL + "/consulta/\(appointmentId)"
         guard let url = URL(string: endpoint) else {

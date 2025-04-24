@@ -55,7 +55,7 @@ struct MyAppointmentsView: View {
 }
 
 #Preview {
-    NavigationView {
+    NavigationStack {
         MyAppointmentsView()
     }
 }

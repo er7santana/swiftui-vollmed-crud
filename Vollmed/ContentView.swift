@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            NavigationView {
+            NavigationStack {
                 HomeView()
             }
             .tabItem {
@@ -20,7 +20,7 @@ struct ContentView: View {
                 )
             }
             
-            NavigationView {
+            NavigationStack {
                 MyAppointmentsView()
             }
             .tabItem {

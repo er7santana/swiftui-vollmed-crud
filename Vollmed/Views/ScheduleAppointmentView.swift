@@ -105,13 +105,13 @@ struct ScheduleAppointmentView: View {
 }
 
 #Preview("Scheduling Appointment") {
-    NavigationView {
+    NavigationStack {
         ScheduleAppointmentView(specialistId: Specialist.mockItem.id)
     }
 }
 
 #Preview("Rescheduling Appointment") {
-    NavigationView {
+    NavigationStack {
         ScheduleAppointmentView(specialistId: Specialist.mockItem.id, appointmentId: "xyz123")
     }
 }
