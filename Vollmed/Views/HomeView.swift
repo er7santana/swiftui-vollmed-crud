@@ -61,8 +61,8 @@ struct HomeView: View {
     func logout() async {
         do {
             if try await service.logoutPatient() {
-                UserDefaults.standard.removeObject(forKey: "patient-id")
-                UserDefaults.standard.removeObject(forKey: "token")
+                UserDefaultsHelper.remove(for: "patient-id")
+                UserDefaultsHelper.remove(for: "token")
             }
         } catch {
             print("Error logging out: \(error)")

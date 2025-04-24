@@ -75,7 +75,7 @@ struct ScheduleAppointmentView: View {
     }
     
     func scheduleAppointment() async {
-        guard let patientID = UserDefaults.standard.string(forKey: "patient-id") else { return }
+        guard let patientID = UserDefaultsHelper.getValue(for: "patient-id") else { return }
         isAppointmentScheduled = false
         defer { showAlert = true }
         do {
@@ -89,7 +89,7 @@ struct ScheduleAppointmentView: View {
     }
     
     func rescheduleAppointment() async {
-        guard let patientID = UserDefaults.standard.string(forKey: "patient-id") else { return }
+        guard let patientID = UserDefaultsHelper.getValue(for: "patient-id") else { return }
         guard let appointmentId else { return }
         isAppointmentScheduled = false
         defer { showAlert = true }

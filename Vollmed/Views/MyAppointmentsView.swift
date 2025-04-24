@@ -45,7 +45,7 @@ struct MyAppointmentsView: View {
     }
     
     func getAllAppointments() async {
-        guard let patientID = UserDefaults.standard.string(forKey: "patient-id") else {
+        guard let patientID = UserDefaultsHelper.getValue(for: "patient-id") else {
             print("Patient ID not found in UserDefaults.")
             return
         }

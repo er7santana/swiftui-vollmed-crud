@@ -18,7 +18,7 @@ struct WebService {
             throw URLError(.badURL)
         }
         
-        guard let token = UserDefaults.standard.string(forKey: "token") else {
+        guard let token = UserDefaultsHelper.getValue(for: "token") else {
             throw URLError(.userAuthenticationRequired)
         }
         
@@ -67,7 +67,7 @@ struct WebService {
             throw URLError(.badURL)
         }
         
-        guard let token = UserDefaults.standard.string(forKey: "token") else {
+        guard let token = UserDefaultsHelper.getValue(for: "token") else {
             throw URLError(.userAuthenticationRequired)
         }
         
@@ -115,7 +115,7 @@ struct WebService {
             throw URLError(.badURL)
         }
         
-        guard let token = UserDefaults.standard.string(forKey: "token") else {
+        guard let token = UserDefaultsHelper.getValue(for: "token") else {
             throw URLError(.userAuthenticationRequired)
         }
         
@@ -145,7 +145,7 @@ struct WebService {
             throw URLError(.badURL)
         }
         
-        guard let token = UserDefaults.standard.string(forKey: "token") else {
+        guard let token = UserDefaultsHelper.getValue(for: "token") else {
             throw URLError(.userAuthenticationRequired)
         }
         
@@ -175,7 +175,7 @@ struct WebService {
             throw URLError(.badURL)
         }
         
-        guard let token = UserDefaults.standard.string(forKey: "token") else {
+        guard let token = UserDefaultsHelper.getValue(for: "token") else {
             throw URLError(.userAuthenticationRequired)
         }
         
