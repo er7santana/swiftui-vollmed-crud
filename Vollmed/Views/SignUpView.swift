@@ -17,6 +17,15 @@ struct SignUpView: View {
     @State private var healthPlan: String = ""
     @State private var password: String = ""
     
+    let healthPlans = [
+        "Amil",
+        "Bradesco Saúde",
+        "SulAmérica",
+        "Unimed",
+        "Hapvida",
+        "Outro"
+    ]
+    
     var isFormFilled: Bool {
         !name.isEmpty &&
         !email.isEmpty &&
@@ -87,15 +96,16 @@ struct SignUpView: View {
                     .cornerRadius(14)
                     .keyboardType(.phonePad)
                 
-                Text("Plano de saúde")
+                Text("Selecione seu plano de saúde")
                     .font(.title3.bold())
                     .foregroundStyle(.accent)
                 
-                TextField("Insira seu plano de saúde", text: $healthPlan)
-                    .padding(14)
-                    .background(Color.gray.opacity(0.25))
-                    .cornerRadius(14)
-                    .autocorrectionDisabled()
+                Picker("Plano de saúde", selection: $healthPlan) {
+                    ForEach(healthPlans, id: \.self) { plan in
+                        Text(plan)
+                            .tag(plan)
+                    }
+                }
                 
                 Text("Senha")
                     .font(.title3.bold())
@@ -128,6 +138,9 @@ struct SignUpView: View {
         }
         .padding()
         .navigationBarBackButtonHidden()
+        .onAppear {
+            healthPlan = healthPlans[0]
+        }
     }
 }
 
