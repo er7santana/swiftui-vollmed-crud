@@ -48,6 +48,31 @@ struct WebService {
         }
     }
     
+    func cancelAppointment(appointmentId: String, reason: String) async throws -> String {
+        let endpoint = baseURL + "/consulta/\(appointmentId)"
+        guard let url = URL(string: endpoint) else {
+            throw URLError(.badURL)
+        }
+        
+        let bodyDictionary = ["motivo_cancelamento": reason]
+        let jsonData = try JSONSerialization.data(withJSONObject: bodyDictionary, options: [])
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData        
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let appointmentResponse = try JSONDecoder().decode(String.self, from: data)
+            return appointmentResponse
+        } catch {
+            let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
+            throw NSError(domain: "WebServiceError", code: errorResponse.status, userInfo: [NSLocalizedDescriptionKey: errorResponse.message])
+        }
+    }
+    
     func scheduleAppointment(specialistID: String, patientID: String, date: String) async throws -> ScheduleAppointmentResponse {
         let endpoint = baseURL + "/consulta"
         guard let url = URL(string: endpoint) else {

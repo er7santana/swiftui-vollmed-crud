@@ -22,6 +22,7 @@
 		9AF23E332DBA911300126521 /* MyAppointmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E322DBA911300126521 /* MyAppointmentsView.swift */; };
 		9AF23E352DBA92B700126521 /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E342DBA92B700126521 /* Appointment.swift */; };
 		9AF23E372DBA997F00126521 /* RescheduleAppointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E362DBA997F00126521 /* RescheduleAppointment.swift */; };
+		9AF23E392DBAC51E00126521 /* CancelAppointmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E382DBAC51E00126521 /* CancelAppointmentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		9AF23E322DBA911300126521 /* MyAppointmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppointmentsView.swift; sourceTree = "<group>"; };
 		9AF23E342DBA92B700126521 /* Appointment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
 		9AF23E362DBA997F00126521 /* RescheduleAppointment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RescheduleAppointment.swift; sourceTree = "<group>"; };
+		9AF23E382DBAC51E00126521 /* CancelAppointmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelAppointmentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -65,6 +67,7 @@
 				484BEF042AB0F7970033C07A /* HomeView.swift */,
 				9AF23E272DB9DBF100126521 /* ScheduleAppointmentView.swift */,
 				9AF23E322DBA911300126521 /* MyAppointmentsView.swift */,
+				9AF23E382DBAC51E00126521 /* CancelAppointmentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				9AF23E312DBA89F600126521 /* ErrorResponse.swift in Sources */,
 				484BEF052AB0F7970033C07A /* HomeView.swift in Sources */,
 				9AF23E352DBA92B700126521 /* Appointment.swift in Sources */,
+				9AF23E392DBAC51E00126521 /* CancelAppointmentView.swift in Sources */,
 				484BEEFD2AB0F5750033C07A /* Specialist.swift in Sources */,
 				484BEF012AB0F6090033C07A /* ButtonView.swift in Sources */,
 				9AF23E372DBA997F00126521 /* RescheduleAppointment.swift in Sources */,
