@@ -28,7 +28,7 @@ struct Specialist: Identifiable, Codable {
     
     static var mockItem: Specialist {
         return Specialist(
-            id: "c84k5kf",
+            id: "578fef3a-59ae-4282-8504-54567e4c46e1",
             name: "Dr. Carlos Alberto",
             crm: "123456",
             imageUrl: "https://images.unsplash.com/photo-1637059824899-a441006a6875?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=752&q=80",

@@ -36,7 +36,7 @@ struct SpecialistCardView: View {
                 }
             }
             
-            NavigationLink(destination: ScheduleAppointmentView(specialist: specialist)) {
+            NavigationLink(destination: ScheduleAppointmentView(specialistId: specialist.id)) {
                 ButtonView(text: "Agendar consulta")
             }
             
@@ -58,7 +58,7 @@ struct SpecialistCardView: View {
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         SpecialistCardView(
             specialist: Specialist.mockItem
         )
