@@ -12,6 +12,30 @@ struct WebService {
     private let baseURL = "http://localhost:3000"
     let imageCache = NSCache<NSString, UIImage>()
     
+    func logoutPatient() async throws -> Bool {
+        let endpoint = baseURL + "/auth/logout"
+        guard let url = URL(string: endpoint) else {
+            throw URLError(.badURL)
+        }
+        
+        guard let token = UserDefaults.standard.string(forKey: "token") else {
+            throw URLError(.userAuthenticationRequired)
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            return true
+        } else {
+            throw URLError(.badServerResponse)
+        }
+    }
+    
     func loginPatient(email: String, password: String) async throws -> LoginResponse {
         let endpoint = baseURL + "/auth/login"
         guard let url = URL(string: endpoint) else {
@@ -44,7 +68,7 @@ struct WebService {
         }
         
         guard let token = UserDefaults.standard.string(forKey: "token") else {
-            throw URLError(.resourceUnavailable)
+            throw URLError(.userAuthenticationRequired)
         }
         
         var request = URLRequest(url: url)
@@ -92,7 +116,7 @@ struct WebService {
         }
         
         guard let token = UserDefaults.standard.string(forKey: "token") else {
-            throw URLError(.resourceUnavailable)
+            throw URLError(.userAuthenticationRequired)
         }
         
         let appointment = RescheduleAppointmentRequest(date: date)
@@ -122,7 +146,7 @@ struct WebService {
         }
         
         guard let token = UserDefaults.standard.string(forKey: "token") else {
-            throw URLError(.resourceUnavailable)
+            throw URLError(.userAuthenticationRequired)
         }
         
         let bodyDictionary = ["motivo_cancelamento": reason]
@@ -152,7 +176,7 @@ struct WebService {
         }
         
         guard let token = UserDefaults.standard.string(forKey: "token") else {
-            throw URLError(.resourceUnavailable)
+            throw URLError(.userAuthenticationRequired)
         }
         
         let appointment = ScheduleAppointmentRequest(specialist: specialistID, patient: patientID, date: date)

@@ -42,6 +42,31 @@ struct HomeView: View {
         .task {
             await fetchSpecialists()
         }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    Task {
+                        await logout()
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "rectangle.portrait.and.arrow.right")
+                        Text("Sair")
+                    }
+                }
+            }
+        }
+    }
+    
+    func logout() async {
+        do {
+            if try await service.logoutPatient() {
+                UserDefaults.standard.removeObject(forKey: "patient-id")
+                UserDefaults.standard.removeObject(forKey: "token")
+            }
+        } catch {
+            print("Error logging out: \(error)")
+        }
     }
     
     func fetchSpecialists() async {
