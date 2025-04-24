@@ -12,6 +12,11 @@ let patientID = "3f6d3158-b375-45ed-b242-db0403a0ba38"
 struct ScheduleAppointmentView: View {
     
     var specialistId: String
+    var appointmentId: String?
+    
+    var isRescheduling: Bool {
+        appointmentId != nil
+    }
     let service = WebService()
     
     @Environment(\.dismiss) var dismiss
@@ -19,6 +24,11 @@ struct ScheduleAppointmentView: View {
     @State private var showAlert: Bool = false
     @State private var isAppointmentScheduled: Bool = false
     @State private var alertMessage: String = ""
+    
+    init(specialistId: String, appointmentId: String? = nil) {
+        self.specialistId = specialistId
+        self.appointmentId = appointmentId
+    }
     
     var body: some View {
         VStack {
@@ -37,21 +47,25 @@ struct ScheduleAppointmentView: View {
             
             Button {
                 Task {
-                    await scheduleAppointment()
+                    if isRescheduling {
+                        await rescheduleAppointment()
+                    } else {
+                        await scheduleAppointment()
+                    }
                 }
             } label: {
-                ButtonView(text: "Agendar consulta")
+                ButtonView(text: isRescheduling ? "Reagendar consulta" : "Agendar consulta")
             }
         }
         .padding()
-        .navigationTitle("Agendar consulta")
+        .navigationTitle(isRescheduling ? "Reagendar consulta" : "Agendar consulta")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             UIDatePicker.appearance().minuteInterval = 15
         }
         .alert(isPresented: $showAlert) {
             Alert(
-                title: Text(isAppointmentScheduled ? "Sucesso" : "Erro ao agendar consulta"),
+                title: Text(isAppointmentScheduled ? "Sucesso" : "Ops, algo deu errado"),
                 message: Text(alertMessage),
                 dismissButton: .default(Text("OK, Entendi"), action: {
                     if isAppointmentScheduled {
@@ -74,10 +88,30 @@ struct ScheduleAppointmentView: View {
             alertMessage = error.localizedDescription
         }
     }
+    
+    func rescheduleAppointment() async {
+        guard let appointmentId else { return }
+        isAppointmentScheduled = false
+        defer { showAlert = true }
+        do {
+            let response = try await service.rescheduleAppointment(appointmentId: appointmentId, date: selectedDate.convertToString())
+            isAppointmentScheduled = true
+            alertMessage = "Consulta remarcada com sucesso para \(response.date.converDateStringToReadableDate())"
+        } catch {
+            print("Error rescheduling appointment: \(error.localizedDescription)")
+            alertMessage = error.localizedDescription
+        }
+    }
 }
 
-#Preview {
+#Preview("Scheduling Appointment") {
     NavigationView {
         ScheduleAppointmentView(specialistId: Specialist.mockItem.id)
+    }
+}
+
+#Preview("Rescheduling Appointment") {
+    NavigationView {
+        ScheduleAppointmentView(specialistId: Specialist.mockItem.id, appointmentId: "xyz123")
     }
 }

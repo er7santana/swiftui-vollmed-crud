@@ -11,6 +11,7 @@ struct SpecialistCardView: View {
     
     let service = WebService()
     var specialist: Specialist
+    var appointment: Appointment?
     
     @State private var image: UIImage? = nil
     
@@ -33,13 +34,32 @@ struct SpecialistCardView: View {
                         .font(.title3)
                         .bold()
                     Text(specialist.specialty)
+                    if let appointment {
+                        Text(appointment.date.converDateStringToReadableDate())
+                    }
                 }
             }
             
-            NavigationLink(destination: ScheduleAppointmentView(specialistId: specialist.id)) {
-                ButtonView(text: "Agendar consulta")
+            if let appointment {
+                HStack {
+                    NavigationLink {
+                        ScheduleAppointmentView(specialistId: specialist.id, appointmentId: appointment.id)
+                    } label: {
+                        ButtonView(text: "Remarcar")
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        ButtonView(text: "Cancelar", buttonType: .cancel)
+                    }
+                }
+            } else {
+                
+                NavigationLink(destination: ScheduleAppointmentView(specialistId: specialist.id)) {
+                    ButtonView(text: "Agendar consulta")
+                }
             }
-            
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()

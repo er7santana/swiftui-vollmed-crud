@@ -12,6 +12,42 @@ struct WebService {
     private let baseURL = "http://localhost:3000"
     let imageCache = NSCache<NSString, UIImage>()
     
+    func getAllAppointmentsFromPatient(patientID: String) async throws -> [Appointment] {
+        let endpoint = "\(baseURL)/paciente/\(patientID)/consultas"
+        guard let url = URL(string: endpoint) else {
+            throw URLError(.badURL)
+        }
+        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let appointments = try JSONDecoder().decode([Appointment].self, from: data)
+        return appointments
+    }
+    
+    func rescheduleAppointment(appointmentId: String, date: String) async throws -> ScheduleAppointmentResponse {
+        let endpoint = baseURL + "/consulta/\(appointmentId)"
+        guard let url = URL(string: endpoint) else {
+            throw URLError(.badURL)
+        }
+        
+        let appointment = RescheduleAppointmentRequest(date: date)
+        let jsonData = try JSONEncoder().encode(appointment)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "PATCH"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        do {
+            let appointmentResponse = try JSONDecoder().decode(ScheduleAppointmentResponse.self, from: data)
+            return appointmentResponse
+        } catch {
+            let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
+            throw NSError(domain: "WebServiceError", code: errorResponse.status, userInfo: [NSLocalizedDescriptionKey: errorResponse.message])
+        }
+    }
+    
     func scheduleAppointment(specialistID: String, patientID: String, date: String) async throws -> ScheduleAppointmentResponse {
         let endpoint = baseURL + "/consulta"
         guard let url = URL(string: endpoint) else {

@@ -20,6 +20,8 @@
 		9AF23E2F2DB9E79C00126521 /* ScheduleAppointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E2E2DB9E79C00126521 /* ScheduleAppointment.swift */; };
 		9AF23E312DBA89F600126521 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E302DBA89F600126521 /* ErrorResponse.swift */; };
 		9AF23E332DBA911300126521 /* MyAppointmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E322DBA911300126521 /* MyAppointmentsView.swift */; };
+		9AF23E352DBA92B700126521 /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E342DBA92B700126521 /* Appointment.swift */; };
+		9AF23E372DBA997F00126521 /* RescheduleAppointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E362DBA997F00126521 /* RescheduleAppointment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		9AF23E2E2DB9E79C00126521 /* ScheduleAppointment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAppointment.swift; sourceTree = "<group>"; };
 		9AF23E302DBA89F600126521 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		9AF23E322DBA911300126521 /* MyAppointmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAppointmentsView.swift; sourceTree = "<group>"; };
+		9AF23E342DBA92B700126521 /* Appointment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
+		9AF23E362DBA997F00126521 /* RescheduleAppointment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RescheduleAppointment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -78,8 +82,10 @@
 			isa = PBXGroup;
 			children = (
 				484BEEFC2AB0F5750033C07A /* Specialist.swift */,
+				9AF23E362DBA997F00126521 /* RescheduleAppointment.swift */,
 				9AF23E2E2DB9E79C00126521 /* ScheduleAppointment.swift */,
 				9AF23E302DBA89F600126521 /* ErrorResponse.swift */,
+				9AF23E342DBA92B700126521 /* Appointment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -208,8 +214,10 @@
 				48539DEF2AB0F47C005BD7C9 /* ContentView.swift in Sources */,
 				9AF23E312DBA89F600126521 /* ErrorResponse.swift in Sources */,
 				484BEF052AB0F7970033C07A /* HomeView.swift in Sources */,
+				9AF23E352DBA92B700126521 /* Appointment.swift in Sources */,
 				484BEEFD2AB0F5750033C07A /* Specialist.swift in Sources */,
 				484BEF012AB0F6090033C07A /* ButtonView.swift in Sources */,
+				9AF23E372DBA997F00126521 /* RescheduleAppointment.swift in Sources */,
 				9AF23E332DBA911300126521 /* MyAppointmentsView.swift in Sources */,
 				484BEF032AB0F7080033C07A /* SpecialistCardView.swift in Sources */,
 				484BEEFF2AB0F59D0033C07A /* WebService.swift in Sources */,
