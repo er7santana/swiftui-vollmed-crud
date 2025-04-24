@@ -9,8 +9,11 @@ import SwiftUI
 
 struct SignInView: View {
     
+    let service = WebService()
+    
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var showAlert: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -42,7 +45,9 @@ struct SignInView: View {
                 .cornerRadius(14)
             
             Button {
-                
+                Task {
+                    await signIn()
+                }
             } label: {
                 ButtonView(text: "Entrar")
             }
@@ -57,6 +62,26 @@ struct SignInView: View {
         }
         .padding()
         .navigationBarBackButtonHidden()
+        .alert("Ops, algo deu errado", isPresented: $showAlert) {
+            Button(action: { }, label: {
+                Text("OK, entendi!")
+            })
+        } message: {
+            Text("Verifique seus dados e tente novamente.")
+        }
+
+    }
+    
+    func signIn() async {
+        do {
+            let response = try await service.loginPatient(email: email, password: password)
+            print("User signed in: \(response)")
+            UserDefaultsHelper.save(value: response.token, key: "token")
+            UserDefaultsHelper.save(value: response.id, key: "patient-id")
+        } catch {
+            print("Error signing in: \(error)")
+            showAlert = true
+        }
     }
 }
 

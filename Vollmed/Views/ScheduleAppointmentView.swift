@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-let patientID = "3f6d3158-b375-45ed-b242-db0403a0ba38"
-
 struct ScheduleAppointmentView: View {
     
     var specialistId: String
@@ -77,6 +75,7 @@ struct ScheduleAppointmentView: View {
     }
     
     func scheduleAppointment() async {
+        guard let patientID = UserDefaults.standard.string(forKey: "patient-id") else { return }
         isAppointmentScheduled = false
         defer { showAlert = true }
         do {
@@ -90,6 +89,7 @@ struct ScheduleAppointmentView: View {
     }
     
     func rescheduleAppointment() async {
+        guard let patientID = UserDefaults.standard.string(forKey: "patient-id") else { return }
         guard let appointmentId else { return }
         isAppointmentScheduled = false
         defer { showAlert = true }
