@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    var service = WebService()
+    
+    @State private var specialists: [Specialist] = []
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack {
@@ -28,12 +33,25 @@ struct HomeView: View {
                     .padding(.vertical, 16)
                 ForEach(specialists) { specialist in
                     SpecialistCardView(specialist: specialist)
-                        .padding(.bottom, 8)
+                        .padding(.bottom, 8)                    
                 }
             }
             .padding(.horizontal)
         }
         .padding(.top)
+        .task {
+            await fetchSpecialists()
+        }
+    }
+    
+    func fetchSpecialists() async {
+        do {
+            if let specialists = try await service.getAllSpecialists() {
+                self.specialists = specialists
+            }
+        } catch {
+            print("Error fetching specialists: \(error)")
+        }
     }
 }
 

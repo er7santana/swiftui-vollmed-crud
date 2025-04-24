@@ -9,17 +9,25 @@ import SwiftUI
 
 struct SpecialistCardView: View {
     
+    let service = WebService()
     var specialist: Specialist
+    
+    @State private var image: UIImage? = nil
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack(spacing: 16.0) {
-                Image(.doctor)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 64, height: 64)
-                    .clipShape(Circle())
-                
+                if let image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 64, height: 64)
+                        .clipShape(Circle())
+                } else {
+                    Circle()
+                        .frame(width: 64, height: 64)
+                        .foregroundColor(.gray.opacity(0.3))
+                }
                 VStack(alignment: .leading, spacing: 8.0) {
                     Text(specialist.name)
                         .font(.title3)
@@ -34,6 +42,15 @@ struct SpecialistCardView: View {
         .padding()
         .background(Color(.lightBlue).opacity(0.15))
         .cornerRadius(16.0)
+        .task {
+            await downloadImage()
+        }
+    }
+    
+    func downloadImage() async {
+        if let image = await service.downloadImage(from: specialist.imageUrl) {
+            self.image = image
+        }
     }
 }
 
