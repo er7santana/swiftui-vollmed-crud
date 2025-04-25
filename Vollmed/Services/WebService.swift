@@ -11,6 +11,7 @@ struct WebService {
     
     private let baseURL = "http://localhost:3000"
     let imageCache = NSCache<NSString, UIImage>()
+    var authManager = AuthenticationManager.shared
     
     func logoutPatient() async throws -> Bool {
         let endpoint = baseURL + "/auth/logout"
@@ -18,7 +19,7 @@ struct WebService {
             throw URLError(.badURL)
         }
         
-        guard let token = UserDefaultsHelper.getValue(for: "token") else {
+        guard let token = authManager.token else {
             throw URLError(.userAuthenticationRequired)
         }
         
@@ -67,7 +68,7 @@ struct WebService {
             throw URLError(.badURL)
         }
         
-        guard let token = UserDefaultsHelper.getValue(for: "token") else {
+        guard let token = authManager.token else {
             throw URLError(.userAuthenticationRequired)
         }
         
@@ -115,7 +116,7 @@ struct WebService {
             throw URLError(.badURL)
         }
         
-        guard let token = UserDefaultsHelper.getValue(for: "token") else {
+        guard let token = authManager.token else {
             throw URLError(.userAuthenticationRequired)
         }
         
@@ -145,7 +146,7 @@ struct WebService {
             throw URLError(.badURL)
         }
         
-        guard let token = UserDefaultsHelper.getValue(for: "token") else {
+        guard let token = authManager.token else {
             throw URLError(.userAuthenticationRequired)
         }
         
@@ -175,7 +176,7 @@ struct WebService {
             throw URLError(.badURL)
         }
         
-        guard let token = UserDefaultsHelper.getValue(for: "token") else {
+        guard let token = authManager.token else {
             throw URLError(.userAuthenticationRequired)
         }
         

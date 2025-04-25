@@ -9,6 +9,9 @@
 import Foundation
 
 struct KeychainHelper {
+    
+    private init() {}
+    
     static func save(value: String, key: String) {
         guard let data = value.data(using: .utf8) else { return }
 
@@ -22,7 +25,7 @@ struct KeychainHelper {
         SecItemAdd(query as CFDictionary, nil)
     }
 
-    static func get(for key: String) -> String? {
+    static func getValue(for key: String) -> String? {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,

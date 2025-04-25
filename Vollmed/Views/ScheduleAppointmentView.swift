@@ -16,6 +16,7 @@ struct ScheduleAppointmentView: View {
         appointmentId != nil
     }
     let service = WebService()
+    var authManager = AuthenticationManager.shared
     
     @Environment(\.dismiss) var dismiss
     @State private var selectedDate: Date = Date()
@@ -75,7 +76,7 @@ struct ScheduleAppointmentView: View {
     }
     
     func scheduleAppointment() async {
-        guard let patientID = UserDefaultsHelper.getValue(for: "patient-id") else { return }
+        guard let patientID = authManager.patientID else { return }
         isAppointmentScheduled = false
         defer { showAlert = true }
         do {
@@ -89,7 +90,6 @@ struct ScheduleAppointmentView: View {
     }
     
     func rescheduleAppointment() async {
-        guard let patientID = UserDefaultsHelper.getValue(for: "patient-id") else { return }
         guard let appointmentId else { return }
         isAppointmentScheduled = false
         defer { showAlert = true }

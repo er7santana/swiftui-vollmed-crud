@@ -11,6 +11,8 @@ struct SignInView: View {
     
     let service = WebService()
     
+    var authManager = AuthenticationManager.shared
+    
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var showAlert: Bool = false
@@ -76,8 +78,8 @@ struct SignInView: View {
         do {
             let response = try await service.loginPatient(email: email, password: password)
             print("User signed in: \(response)")
-            UserDefaultsHelper.save(value: response.token, key: "token")
-            UserDefaultsHelper.save(value: response.id, key: "patient-id")
+            authManager.saveToken(token: response.token)
+            authManager.savePatientID(id: response.id)
         } catch {
             print("Error signing in: \(error)")
             showAlert = true

@@ -11,6 +11,7 @@ struct HomeView: View {
     
     var service = WebService()
     
+    var authManager = AuthenticationManager.shared
     @State private var specialists: [Specialist] = []
     
     var body: some View {
@@ -61,8 +62,8 @@ struct HomeView: View {
     func logout() async {
         do {
             if try await service.logoutPatient() {
-                UserDefaultsHelper.remove(for: "patient-id")
-                UserDefaultsHelper.remove(for: "token")
+                authManager.removeToken()
+                authManager.removePatientID()
             }
         } catch {
             print("Error logging out: \(error)")

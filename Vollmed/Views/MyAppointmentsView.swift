@@ -10,6 +10,7 @@ import SwiftUI
 struct MyAppointmentsView: View {
     
     let service = WebService()
+    var authManager = AuthenticationManager.shared
     
     @State private var appointments: [Appointment] = []
     
@@ -45,7 +46,7 @@ struct MyAppointmentsView: View {
     }
     
     func getAllAppointments() async {
-        guard let patientID = UserDefaultsHelper.getValue(for: "patient-id") else {
+        guard let patientID = authManager.patientID else {
             print("Patient ID not found in UserDefaults.")
             return
         }
