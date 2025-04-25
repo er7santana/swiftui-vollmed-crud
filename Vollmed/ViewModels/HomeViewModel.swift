@@ -9,14 +9,29 @@ import Foundation
 
 class HomeViewModel: ObservableObject {
     
-    let service = WebService()
-    var authManager = AuthenticationManager.shared
+    let homeService: HomeServiceable
+    let authService: AuthServiceable
+    let authManager = AuthenticationManager.shared
     @Published var specialists: [Specialist] = []
+    
+    init(homeservice: HomeServiceable = HomeNetworkingService(),
+         authService: AuthServiceable = AuthNetworkingService()) {
+        self.homeService = homeservice
+        self.authService = authService
+    }
     
     func fetchSpecialists() async {
         do {
-            if let specialists = try await service.getAllSpecialists() {
-                self.specialists = specialists
+            let result = try await homeService.getAllSpecialists()
+            switch result {
+            case .success(let responseSpecialists):
+                if let responseSpecialists {
+                    DispatchQueue.main.async {
+                        self.specialists = responseSpecialists
+                    }
+                }
+            case .failure(let error):
+                print("Error fetching specialists: \(error)")
             }
         } catch {
             print("Error fetching specialists: \(error)")
@@ -25,9 +40,13 @@ class HomeViewModel: ObservableObject {
     
     func logout() async {
         do {
-            if try await service.logoutPatient() {
+            let result = try await authService.logoutPatient()
+            switch result {
+            case .success:
                 authManager.removeToken()
                 authManager.removePatientID()
+            case .failure(let requestError):
+                print(requestError.localizedDescription)
             }
         } catch {
             print("Error logging out: \(error)")

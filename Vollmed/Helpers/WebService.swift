@@ -13,30 +13,6 @@ struct WebService {
     let imageCache = NSCache<NSString, UIImage>()
     var authManager = AuthenticationManager.shared
     
-    func logoutPatient() async throws -> Bool {
-        let endpoint = baseURL + "/auth/logout"
-        guard let url = URL(string: endpoint) else {
-            throw URLError(.badURL)
-        }
-        
-        guard let token = authManager.token else {
-            throw URLError(.userAuthenticationRequired)
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
-        let (_, response) = try await URLSession.shared.data(for: request)
-        
-        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-            return true
-        } else {
-            throw URLError(.badServerResponse)
-        }
-    }
-    
     func loginPatient(email: String, password: String) async throws -> LoginResponse {
         let endpoint = baseURL + "/auth/login"
         guard let url = URL(string: endpoint) else {
@@ -199,17 +175,6 @@ struct WebService {
             let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
             throw NSError(domain: "WebServiceError", code: errorResponse.status, userInfo: [NSLocalizedDescriptionKey: errorResponse.message])
         }
-    }
-    
-    func getAllSpecialists() async throws -> [Specialist]? {
-        let endpoint = baseURL + "/especialista"
-        guard let url = URL(string: endpoint) else {
-            throw URLError(.badURL)
-        }
-        
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let specialists = try JSONDecoder().decode([Specialist].self, from: data)
-        return specialists
     }
     
     func downloadImage(from url: String) async -> UIImage? {

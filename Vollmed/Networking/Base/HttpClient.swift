@@ -8,7 +8,7 @@
 import Foundation
 
 protocol HttpClient {
-    func sendRequest<T: Decodable>(endpoint: Endpoint, responseModel: T.Type?) async -> Result<T, RequestError>
+    func sendRequest<T: Decodable>(endpoint: Endpoint, responseModel: T.Type?) async -> Result<T?, RequestError>
 }
 
 extension HttpClient {
