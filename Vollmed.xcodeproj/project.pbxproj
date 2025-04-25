@@ -60,6 +60,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9AF23E292DB9E54E00126521 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
 		9AF23E472DBB08AD00126521 /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
+		9AF23E4A2DBB982000126521 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				484BEEFE2AB0F59D0033C07A /* WebService.swift */,
-				9AF23E462DBB070C00126521 /* Helpers */,
+				9AF23E462DBB070C00126521 /* Security */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -138,6 +139,7 @@
 		48539DEB2AB0F47C005BD7C9 /* Vollmed */ = {
 			isa = PBXGroup;
 			children = (
+				9AF23E4A2DBB982000126521 /* ViewModels */,
 				9AF23E472DBB08AD00126521 /* Managers */,
 				9AF23E292DB9E54E00126521 /* Extensions */,
 				484BEEFB2AB0F56C0033C07A /* Services */,
@@ -159,13 +161,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		9AF23E462DBB070C00126521 /* Helpers */ = {
+		9AF23E462DBB070C00126521 /* Security */ = {
 			isa = PBXGroup;
 			children = (
 				9AF23E422DBAFBE500126521 /* UserDefaultsHelper.swift */,
 				9AF23E442DBB070300126521 /* KeychainHelper.swift */,
 			);
-			path = Helpers;
+			path = Security;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,6 +188,7 @@
 			fileSystemSynchronizedGroups = (
 				9AF23E292DB9E54E00126521 /* Extensions */,
 				9AF23E472DBB08AD00126521 /* Managers */,
+				9AF23E4A2DBB982000126521 /* ViewModels */,
 			);
 			name = Vollmed;
 			productName = Vollmed;

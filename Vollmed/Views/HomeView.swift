@@ -11,8 +11,7 @@ struct HomeView: View {
     
     var service = WebService()
     
-    var authManager = AuthenticationManager.shared
-    @State private var specialists: [Specialist] = []
+    @ObservedObject var viewModel = HomeViewModel()
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -32,7 +31,7 @@ struct HomeView: View {
                     .foregroundColor(.accentColor)
                     .multilineTextAlignment(.center)
                     .padding(.vertical, 16)
-                ForEach(specialists) { specialist in
+                ForEach(viewModel.specialists) { specialist in
                     SpecialistCardView(specialist: specialist)
                         .padding(.bottom, 8)                    
                 }
@@ -41,13 +40,13 @@ struct HomeView: View {
         }
         .padding(.top)
         .task {
-            await fetchSpecialists()
+            await viewModel.fetchSpecialists()
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     Task {
-                        await logout()
+                        await viewModel.logout()
                     }
                 } label: {
                     HStack {
@@ -56,27 +55,6 @@ struct HomeView: View {
                     }
                 }
             }
-        }
-    }
-    
-    func logout() async {
-        do {
-            if try await service.logoutPatient() {
-                authManager.removeToken()
-                authManager.removePatientID()
-            }
-        } catch {
-            print("Error logging out: \(error)")
-        }
-    }
-    
-    func fetchSpecialists() async {
-        do {
-            if let specialists = try await service.getAllSpecialists() {
-                self.specialists = specialists
-            }
-        } catch {
-            print("Error fetching specialists: \(error)")
         }
     }
 }
