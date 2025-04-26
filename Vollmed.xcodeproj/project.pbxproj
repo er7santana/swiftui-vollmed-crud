@@ -58,6 +58,8 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		9A03D4062DBC6D3A00E467CC /* SnackBarView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SnackBarView; sourceTree = "<group>"; };
+		9A03D4092DBC7E3100E467CC /* Skeleton */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Skeleton; sourceTree = "<group>"; };
 		9AF23E292DB9E54E00126521 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
 		9AF23E472DBB08AD00126521 /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
 		9AF23E4A2DBB982000126521 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
@@ -78,6 +80,8 @@
 		484BEEF82AB0F55F0033C07A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9A03D4092DBC7E3100E467CC /* Skeleton */,
+				9A03D4062DBC6D3A00E467CC /* SnackBarView */,
 				484BEEF92AB0F5630033C07A /* Components */,
 				484BEF042AB0F7970033C07A /* HomeView.swift */,
 				9AF23E272DB9DBF100126521 /* ScheduleAppointmentView.swift */,
@@ -180,6 +184,8 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				9A03D4062DBC6D3A00E467CC /* SnackBarView */,
+				9A03D4092DBC7E3100E467CC /* Skeleton */,
 				9AF23E292DB9E54E00126521 /* Extensions */,
 				9AF23E472DBB08AD00126521 /* Managers */,
 				9AF23E4A2DBB982000126521 /* ViewModels */,

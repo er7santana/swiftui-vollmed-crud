@@ -31,7 +31,7 @@ enum RequestError: Error {
         case .unknownError:
             return "Ocorreu um erro desconhecido"
         case .custom(let error):
-            if let message = error["message"] as? String {
+            if let errorItem = error["error"] as? [String: Any], let message = errorItem["message"] as? String {
                 return message
             }
             return "Ocorreu um erro desconhecido"

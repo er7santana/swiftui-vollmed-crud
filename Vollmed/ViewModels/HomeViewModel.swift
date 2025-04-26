@@ -5,7 +5,7 @@
 //  Created by Eliezer Rodrigo on 25/04/25.
 //
 
-import Foundation
+import SwiftUI
 
 class HomeViewModel: ObservableObject {
     
@@ -13,6 +13,9 @@ class HomeViewModel: ObservableObject {
     let authService: AuthServiceable
     let authManager = AuthenticationManager.shared
     @Published var specialists: [Specialist] = []
+    @Published var isShowingSnackBar = false
+    @Published var snackBarMessage: String = ""
+    @Published var isFetchingData = false
     
     init(homeservice: HomeServiceable = HomeNetworkingService(),
          authService: AuthServiceable = AuthNetworkingService()) {
@@ -21,20 +24,29 @@ class HomeViewModel: ObservableObject {
     }
     
     func fetchSpecialists() async {
+        isFetchingData = true
+        defer { isFetchingData = false }
         do {
+            sleep(1)
             let result = try await homeService.getAllSpecialists()
             switch result {
             case .success(let responseSpecialists):
+                isShowingSnackBar = false
                 if let responseSpecialists {
                     DispatchQueue.main.async {
                         self.specialists = responseSpecialists
                     }
                 }
             case .failure(let error):
-                print("Error fetching specialists: \(error)")
+                snackBarMessage = error.customMessage
+                withAnimation {
+                    isShowingSnackBar = true
+                }
             }
         } catch {
             print("Error fetching specialists: \(error)")
+            snackBarMessage = "Erro ao buscar especialistas"
+            isShowingSnackBar = true
         }
     }
     

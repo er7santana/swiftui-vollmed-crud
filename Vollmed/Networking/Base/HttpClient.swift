@@ -24,6 +24,11 @@ extension HttpClient {
             return .failure(.invalidURL)
         }
         
+//        let urlApiary = "https://private-aeef85-vollmedapierrors10.apiary-mock.com/specialists"
+//        guard let url = URL(string: urlApiary) else {
+//            return .failure(.invalidURL)
+//        }
+        
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = endpoint.headers
@@ -63,6 +68,11 @@ extension HttpClient {
                 if let decodedError = try? JSONDecoder().decode(SecondErrorResponse.self, from: data) {
                     return .failure(.serverError(decodedError.error))
                 }
+                
+                if let errorResponse = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                    return .failure(.custom(errorResponse))
+                }
+                
                 return .failure(.invalidResponse)
                 
             case 401:
