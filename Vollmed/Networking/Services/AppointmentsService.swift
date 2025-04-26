@@ -1,50 +1,31 @@
 //
-//  WebService.swift
+//  AppointmentsService.swift
 //  Vollmed
 //
-//  Created by Giovanna Moeller on 12/09/23.
+//  Created by Eliezer Rodrigo on 26/04/25.
 //
 
-import UIKit
+import Foundation
 
-struct WebService {
+let baseURL = "http://localhost:3000"
+
+protocol AppointmentsServiceable {
+    func getAllAppointmentsFromPatient(patientID: String) async throws -> [Appointment]
+    func rescheduleAppointment(appointmentId: String, date: String) async throws -> ScheduleAppointmentResponse
+    func cancelAppointment(appointmentId: String, reason: String) async throws -> String
+    func scheduleAppointment(specialistID: String, patientID: String, date: String) async throws -> ScheduleAppointmentResponse
+}
+
+struct AppointmentsService: AppointmentsServiceable {
     
-    private let baseURL = "http://localhost:3000"
-    let imageCache = NSCache<NSString, UIImage>()
     var authManager = AuthenticationManager.shared
-    
-    func loginPatient(email: String, password: String) async throws -> LoginResponse {
-        let endpoint = baseURL + "/auth/login"
-        guard let url = URL(string: endpoint) else {
-            throw URLError(.badURL)
-        }
-        
-        let loginRequest = LoginRequest(email: email, password: password)
-        let jsonData = try JSONEncoder().encode(loginRequest)
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        let (data, _) = try await URLSession.shared.data(for: request)
-        
-        do {
-            let patientResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
-            return patientResponse
-        } catch {
-            let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
-            throw NSError(domain: "WebServiceError", code: errorResponse.status, userInfo: [NSLocalizedDescriptionKey: errorResponse.message])
-        }
-    }
-    
     func getAllAppointmentsFromPatient(patientID: String) async throws -> [Appointment] {
         let endpoint = "\(baseURL)/paciente/\(patientID)/consultas"
         guard let url = URL(string: endpoint) else {
             throw URLError(.badURL)
         }
         
-        guard let token = authManager.token else {
+        guard let token = AuthenticationManager.shared.token else {
             throw URLError(.userAuthenticationRequired)
         }
         
@@ -56,34 +37,6 @@ struct WebService {
         let (data, _) = try await URLSession.shared.data(for: request)
         let appointments = try JSONDecoder().decode([Appointment].self, from: data)
         return appointments
-    }
-    
-    func registerPatient(patient: Patient) async throws -> Patient {
-        let endpoint = baseURL + "/paciente"
-        guard let url = URL(string: endpoint) else {
-            throw URLError(.badURL)
-        }
-        
-        let jsonData = try JSONEncoder().encode(patient)
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        
-        let (data, _) = try await URLSession.shared.data(for: request)
-        
-        do {
-            let patientResponse = try JSONDecoder().decode(Patient.self, from: data)
-            return patientResponse
-        } catch {
-            if let errorResponse = try? JSONDecoder().decode(ErrorResponse.self, from: data) {
-                throw NSError(domain: "WebServiceError", code: errorResponse.status, userInfo: [NSLocalizedDescriptionKey: errorResponse.message])
-            } else if let errorResponse = try? JSONDecoder().decode(SecondErrorResponse.self, from: data) {
-                throw NSError(domain: "WebServiceError", code: 400, userInfo: [NSLocalizedDescriptionKey: errorResponse.error])
-            }
-            throw NSError(domain: "WebServiceError", code: 500, userInfo: [NSLocalizedDescriptionKey: "Erro ao efetuar cadastro do paciente"])
-        }
     }
     
     func rescheduleAppointment(appointmentId: String, date: String) async throws -> ScheduleAppointmentResponse {
@@ -177,25 +130,5 @@ struct WebService {
         }
     }
     
-    func downloadImage(from url: String) async -> UIImage? {
-        guard let url = URL(string: url) else { return nil }
-        
-        // Verificar cache
-        if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
-            return cachedImage
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            guard let image = UIImage(data: data) else { return nil }
-            
-            // Armazenar imagem no cache
-            imageCache.setObject(image, forKey: url.absoluteString as NSString)
-            
-            return image
-        } catch {
-            print("Error downloading image: \(error)")
-            return nil
-        }
-    }
 }
+    

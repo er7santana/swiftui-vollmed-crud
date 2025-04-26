@@ -9,14 +9,11 @@ import SwiftUI
 
 struct MyAppointmentsView: View {
     
-    let service = WebService()
-    var authManager = AuthenticationManager.shared
-    
-    @State private var appointments: [Appointment] = []
+    @ObservedObject var viewModel = MyAppointmentsViewModel()
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            if appointments.isEmpty {
+            if viewModel.appointments.isEmpty {
                 VStack {
                     
                     Image(systemName: "calendar.badge.exclamationmark")
@@ -33,7 +30,7 @@ struct MyAppointmentsView: View {
                         .padding()
                 }
             }
-            ForEach(appointments) { appointment in
+            ForEach(viewModel.appointments) { appointment in
                 SpecialistCardView(specialist: appointment.specialist, appointment: appointment)
             }
         }
@@ -41,20 +38,7 @@ struct MyAppointmentsView: View {
         .navigationTitle("Minhas consultas")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            await getAllAppointments()
-        }
-    }
-    
-    func getAllAppointments() async {
-        guard let patientID = authManager.patientID else {
-            print("Patient ID not found in UserDefaults.")
-            return
-        }
-        do {
-            let appointments: [Appointment] = try await service.getAllAppointmentsFromPatient(patientID: patientID)
-            self.appointments = appointments
-        } catch {
-            print("Error fetching appointments: \(error)")
+            await viewModel.getAllAppointments()
         }
     }
 }

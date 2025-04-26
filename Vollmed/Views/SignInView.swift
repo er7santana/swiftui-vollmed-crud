@@ -9,9 +9,13 @@ import SwiftUI
 
 struct SignInView: View {
     
-    let service = WebService()
+    var service: AuthServiceable
     
     var authManager = AuthenticationManager.shared
+    
+    init(service: AuthServiceable = AuthNetworkingService()) {
+        self.service = service
+    }
     
     @State private var email: String = ""
     @State private var password: String = ""
@@ -76,10 +80,15 @@ struct SignInView: View {
     
     func signIn() async {
         do {
-            let response = try await service.loginPatient(email: email, password: password)
-            print("User signed in: \(response)")
-            authManager.saveToken(token: response.token)
-            authManager.savePatientID(id: response.id)
+            let result = try await service.loginPatient(email: email, password: password)
+            switch result {
+            case .success(let response):
+                authManager.saveToken(token: response.token)
+                authManager.savePatientID(id: response.id)                
+            case .failure(let failure):
+                print(failure.customMessage)
+                showAlert = true
+            }
         } catch {
             print("Error signing in: \(error)")
             showAlert = true

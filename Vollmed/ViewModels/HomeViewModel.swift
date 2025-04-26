@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 class HomeViewModel: ObservableObject {
     
     let homeService: HomeServiceable
@@ -27,15 +28,12 @@ class HomeViewModel: ObservableObject {
         isFetchingData = true
         defer { isFetchingData = false }
         do {
-            sleep(1)
             let result = try await homeService.getAllSpecialists()
             switch result {
             case .success(let responseSpecialists):
                 isShowingSnackBar = false
                 if let responseSpecialists {
-                    DispatchQueue.main.async {
-                        self.specialists = responseSpecialists
-                    }
+                    self.specialists = responseSpecialists
                 }
             case .failure(let error):
                 snackBarMessage = error.customMessage

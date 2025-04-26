@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		484BEEFD2AB0F5750033C07A /* Specialist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BEEFC2AB0F5750033C07A /* Specialist.swift */; };
-		484BEEFF2AB0F59D0033C07A /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BEEFE2AB0F59D0033C07A /* WebService.swift */; };
 		484BEF012AB0F6090033C07A /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BEF002AB0F6090033C07A /* ButtonView.swift */; };
 		484BEF032AB0F7080033C07A /* SpecialistCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BEF022AB0F7080033C07A /* SpecialistCardView.swift */; };
 		484BEF052AB0F7970033C07A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BEF042AB0F7970033C07A /* HomeView.swift */; };
@@ -33,7 +32,6 @@
 
 /* Begin PBXFileReference section */
 		484BEEFC2AB0F5750033C07A /* Specialist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Specialist.swift; sourceTree = "<group>"; };
-		484BEEFE2AB0F59D0033C07A /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		484BEF002AB0F6090033C07A /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		484BEF022AB0F7080033C07A /* SpecialistCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistCardView.swift; sourceTree = "<group>"; };
 		484BEF042AB0F7970033C07A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -119,7 +117,6 @@
 		484BEEFB2AB0F56C0033C07A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				484BEEFE2AB0F59D0033C07A /* WebService.swift */,
 				9AF23E422DBAFBE500126521 /* UserDefaultsHelper.swift */,
 				9AF23E442DBB070300126521 /* KeychainHelper.swift */,
 			);
@@ -262,7 +259,6 @@
 				9AF23E332DBA911300126521 /* MyAppointmentsView.swift in Sources */,
 				484BEF032AB0F7080033C07A /* SpecialistCardView.swift in Sources */,
 				9AF23E3F2DBAEFFB00126521 /* Patient.swift in Sources */,
-				484BEEFF2AB0F59D0033C07A /* WebService.swift in Sources */,
 				48539DED2AB0F47C005BD7C9 /* VollmedApp.swift in Sources */,
 				9AF23E3D2DBAD5C500126521 /* SignUpView.swift in Sources */,
 				9AF23E282DB9DBF100126521 /* ScheduleAppointmentView.swift in Sources */,

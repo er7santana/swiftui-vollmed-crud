@@ -15,7 +15,7 @@ struct ScheduleAppointmentView: View {
     var isRescheduling: Bool {
         appointmentId != nil
     }
-    let service = WebService()
+    let service = AppointmentsService()
     var authManager = AuthenticationManager.shared
     
     @Environment(\.dismiss) var dismiss

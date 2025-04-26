@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    let service = WebService()
+    let service = AuthNetworkingService()
     
     @Environment(\.dismiss) private var dismiss
     @State private var name: String = ""
@@ -176,9 +176,15 @@ struct SignUpView: View {
             healthPlan: healthPlan,
         )
         do {
-            let response = try await service.registerPatient(patient: patient)
-            registered = true
-            alertMessage = "Você já pode fazer login."
+            let result = try await service.signUp(patient: patient)
+            switch result {
+            case .success:
+                registered = true
+                alertMessage = "Você já pode fazer login."
+            case .failure(let error):
+                alertMessage = error.customMessage
+                print(error.localizedDescription)
+            }
         } catch {
             alertMessage = error.localizedDescription
             print(error.localizedDescription)

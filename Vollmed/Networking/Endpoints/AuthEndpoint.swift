@@ -10,6 +10,7 @@ import Foundation
 enum AuthEndpoint {
     case login(LoginRequest)
     case logout
+    case signUp(Patient)
 }
 
 extension AuthEndpoint: Endpoint {
@@ -19,22 +20,26 @@ extension AuthEndpoint: Endpoint {
             return "/auth/logout"
         case .login:
             return "/auth/login"
+        case .signUp:
+            return "/paciente"
         }
     }
     
     var method: RequestMethod {
         switch self {
-        case .logout, .login:
+        case .logout, .login, .signUp:
             return .post
         }
     }
     
-    var body: [String : String]? {
+    var body: [String : Any]? {
         switch self {
         case .logout:
             return nil
         case .login(let loginRequest):
-            return nil
+            return loginRequest.dictionary
+        case.signUp(let patient):
+            return patient.dictionary
         }
     }
     
@@ -50,6 +55,10 @@ extension AuthEndpoint: Endpoint {
                 "Content-Type": "application/json",
             ]
         case .login:
+            return [
+                "Content-Type": "application/json",
+            ]
+        case .signUp:
             return [
                 "Content-Type": "application/json",
             ]

@@ -26,7 +26,7 @@ extension HomeEndpoint: Endpoint {
         }
     }
     
-    var body: [String : String]? {
+    var body: [String : Any]? {
         switch self {
         case .getAllSpecialists:
             return nil

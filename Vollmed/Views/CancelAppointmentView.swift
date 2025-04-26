@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CancelAppointmentView: View {
 
-    let service = WebService()
+    let service = AppointmentsService()
     let appointmentId: String
     
     @Environment(\.dismiss) private var dismiss
