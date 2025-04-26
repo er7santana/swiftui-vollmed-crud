@@ -9,36 +9,11 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    let service = AuthNetworkingService()
-    
     @Environment(\.dismiss) private var dismiss
-    @State private var name: String = ""
-    @State private var email: String = ""
-    @State private var cpf: String = ""
-    @State private var phoneNumber: String = ""
-    @State private var healthPlan: String = ""
-    @State private var password: String = ""
-    @State private var showAlert: Bool = false
-    @State private var registered: Bool = false
-    @State private var alertMessage: String = ""
-    @State private var navigateToSignIn: Bool = false
+    @ObservedObject var viewModel: SignUpViewModel
     
-    let healthPlans = [
-        "Amil",
-        "Bradesco Saúde",
-        "SulAmérica",
-        "Unimed",
-        "Hapvida",
-        "Outro"
-    ]
-    
-    var isFormFilled: Bool {
-        !name.isEmpty &&
-        !email.isEmpty &&
-        !cpf.isEmpty &&
-        !phoneNumber.isEmpty &&
-        !healthPlan.isEmpty &&
-        !password.isEmpty
+    init(viewModel: SignUpViewModel = SignUpViewModel()) {
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -63,7 +38,7 @@ struct SignUpView: View {
                     .font(.title3.bold())
                     .foregroundStyle(.accent)
                 
-                TextField("Insira seu nome completo", text: $name)
+                TextField("Insira seu nome completo", text: $viewModel.name)
                     .padding(14)
                     .background(Color.gray.opacity(0.25))
                     .cornerRadius(14)
@@ -74,7 +49,7 @@ struct SignUpView: View {
                     .font(.title3.bold())
                     .foregroundStyle(.accent)
                 
-                TextField("Insira seu e-mail", text: $email)
+                TextField("Insira seu e-mail", text: $viewModel.email)
                     .padding(14)
                     .background(Color.gray.opacity(0.25))
                     .cornerRadius(14)
@@ -86,7 +61,7 @@ struct SignUpView: View {
                     .font(.title3.bold())
                     .foregroundStyle(.accent)
                 
-                TextField("Insira seu CPF", text: $cpf)
+                TextField("Insira seu CPF", text: $viewModel.cpf)
                     .padding(14)
                     .background(Color.gray.opacity(0.25))
                     .cornerRadius(14)
@@ -96,7 +71,7 @@ struct SignUpView: View {
                     .font(.title3.bold())
                     .foregroundStyle(.accent)
                 
-                TextField("Insira seu número de telefone", text: $phoneNumber)
+                TextField("Insira seu número de telefone", text: $viewModel.phoneNumber)
                     .padding(14)
                     .background(Color.gray.opacity(0.25))
                     .cornerRadius(14)
@@ -106,8 +81,8 @@ struct SignUpView: View {
                     .font(.title3.bold())
                     .foregroundStyle(.accent)
                 
-                Picker("Plano de saúde", selection: $healthPlan) {
-                    ForEach(healthPlans, id: \.self) { plan in
+                Picker("Plano de saúde", selection: $viewModel.healthPlan) {
+                    ForEach(viewModel.healthPlans, id: \.self) { plan in
                         Text(plan)
                             .tag(plan)
                     }
@@ -117,17 +92,17 @@ struct SignUpView: View {
                     .font(.title3.bold())
                     .foregroundStyle(.accent)
                 
-                SecureField("Insira sua senha", text: $password)
+                SecureField("Insira sua senha", text: $viewModel.password)
                     .padding(14)
                     .background(Color.gray.opacity(0.25))
                     .cornerRadius(14)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
                 
-                if isFormFilled {
+                if viewModel.isFormFilled {
                     Button {
                         Task {
-                            await register()
+                            await viewModel.register()
                         }
                     } label: {
                         ButtonView(text: "Cadastrar")
@@ -147,47 +122,19 @@ struct SignUpView: View {
         .padding()
         .navigationBarBackButtonHidden()
         .onAppear {
-            healthPlan = healthPlans[0]
+            viewModel.resetForm()
         }
-        .alert(registered ? "Sucesso" : "Ops, algo deu errado", isPresented: $showAlert) {
+        .alert(viewModel.registered ? "Sucesso" : "Ops, algo deu errado", isPresented: $viewModel.showAlert) {
             Button("OK, Entendi") {
-                if registered {
-                    navigateToSignIn = true
+                if viewModel.registered {
+                    viewModel.navigateToSignIn = true
                 }
             }
         } message: {
-            Text(alertMessage)
+            Text(viewModel.alertMessage)
         }
-        .navigationDestination(isPresented: $navigateToSignIn) {
+        .navigationDestination(isPresented: $viewModel.navigateToSignIn) {
             SignInView()
-        }
-    }
-    
-    func register() async {
-        registered = false
-        defer { showAlert = true }
-        let patient = Patient(
-            id: nil,
-            cpf: cpf,
-            name: name,
-            email: email,
-            password: password,
-            phoneNumber: phoneNumber,
-            healthPlan: healthPlan,
-        )
-        do {
-            let result = try await service.signUp(patient: patient)
-            switch result {
-            case .success:
-                registered = true
-                alertMessage = "Você já pode fazer login."
-            case .failure(let error):
-                alertMessage = error.customMessage
-                print(error.localizedDescription)
-            }
-        } catch {
-            alertMessage = error.localizedDescription
-            print(error.localizedDescription)
         }
     }
 }
