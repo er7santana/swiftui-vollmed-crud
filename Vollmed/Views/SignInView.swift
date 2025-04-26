@@ -9,18 +9,12 @@ import SwiftUI
 
 struct SignInView: View {
     
-    var service: AuthServiceable
+    @ObservedObject var viewModel: SignInViewModel
     
-    var authManager = AuthenticationManager.shared
-    
-    init(service: AuthServiceable = AuthNetworkingService()) {
-        self.service = service
+    init(viewModel: SignInViewModel = SignInViewModel()) {
+        self.viewModel = viewModel
     }
-    
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var showAlert: Bool = false
-    
+        
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Image(.logo)
@@ -33,7 +27,7 @@ struct SignInView: View {
                 .foregroundStyle(.accent)
                 .padding(.top, 40)
             
-            TextField("Insira seu e-mail", text: $email)
+            TextField("Insira seu e-mail", text: $viewModel.email)
                 .padding(14)
                 .background(Color.gray.opacity(0.25))
                 .cornerRadius(14)
@@ -45,14 +39,14 @@ struct SignInView: View {
                 .font(.title3.bold())
                 .foregroundStyle(.accent)
             
-            SecureField("Insira sua senha", text: $password)
+            SecureField("Insira sua senha", text: $viewModel.password)
                 .padding(14)
                 .background(Color.gray.opacity(0.25))
                 .cornerRadius(14)
             
             Button {
                 Task {
-                    await signIn()
+                    await viewModel.signIn()
                 }
             } label: {
                 ButtonView(text: "Entrar")
@@ -68,7 +62,7 @@ struct SignInView: View {
         }
         .padding()
         .navigationBarBackButtonHidden()
-        .alert("Ops, algo deu errado", isPresented: $showAlert) {
+        .alert("Ops, algo deu errado", isPresented: $viewModel.showAlert) {
             Button(action: { }, label: {
                 Text("OK, entendi!")
             })
@@ -76,23 +70,6 @@ struct SignInView: View {
             Text("Verifique seus dados e tente novamente.")
         }
 
-    }
-    
-    func signIn() async {
-        do {
-            let result = try await service.loginPatient(email: email, password: password)
-            switch result {
-            case .success(let response):
-                authManager.saveToken(token: response.token)
-                authManager.savePatientID(id: response.id)                
-            case .failure(let failure):
-                print(failure.customMessage)
-                showAlert = true
-            }
-        } catch {
-            print("Error signing in: \(error)")
-            showAlert = true
-        }
     }
 }
 
