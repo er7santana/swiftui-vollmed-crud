@@ -22,10 +22,10 @@ struct SignInView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: .infinity, maxHeight: 36, alignment: .center)
+                .padding(.bottom, 40)
             
             Text("E-mail")
                 .titleMdBoldStyle()
-                .padding(.top, 40)
             
             TextField("Insira seu e-mail", text: $viewModel.email)
                 .padding(14)
