@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import VollMedUI
 
 struct ScheduleAppointmentView: View {
     
@@ -30,55 +31,70 @@ struct ScheduleAppointmentView: View {
     }
     
     var body: some View {
-        VStack {
-            Text("Selecione a data e o horário da consulta")
-                .font(.title3)
-                .bold()
-                .foregroundStyle(.accent)
-                .multilineTextAlignment(.center)
-                .padding(.top)
-            
-            DatePicker("Escolha a data da consulta", selection: $selectedDate, in: Date()..., displayedComponents: [.date, .hourAndMinute])
-                .datePickerStyle(.graphical)
-            
-            
-            Spacer()
-            
-            Button {
-                Task {
-                    if isRescheduling {
-                        await rescheduleAppointment()
-                    } else {
-                        await scheduleAppointment()
+        ZStack {
+            VStack {
+                Text("Selecione a data e o horário da consulta")
+                    .font(.title3)
+                    .bold()
+                    .foregroundStyle(.accent)
+                    .multilineTextAlignment(.center)
+                    .padding(.top)
+                
+                DatePicker("Escolha a data da consulta", selection: $selectedDate, in: Date()..., displayedComponents: [.date, .hourAndMinute])
+                    .datePickerStyle(.graphical)
+                
+                
+                Spacer()
+                
+                Button {
+                    Task {
+                        if isRescheduling {
+                            await rescheduleAppointment()
+                        } else {
+                            await scheduleAppointment()
+                        }
+                    }
+                } label: {
+                    ButtonView(text: isRescheduling ? "Reagendar consulta" : "Agendar consulta")
+                }
+            }
+            .padding()
+            .navigationTitle(isRescheduling ? "Reagendar consulta" : "Agendar consulta")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                UIDatePicker.appearance().minuteInterval = 15
+            }
+            .overlay {
+                VStack {
+                    Spacer()
+                    if showAlert {
+                        VollmedSnackBar(title: isAppointmentScheduled ? "Sucesso" : "Ops, algo deu errado", description: alertMessage)
+                            .transition(.move(edge: .bottom))
                     }
                 }
-            } label: {
-                ButtonView(text: isRescheduling ? "Reagendar consulta" : "Agendar consulta")
             }
-        }
-        .padding()
-        .navigationTitle(isRescheduling ? "Reagendar consulta" : "Agendar consulta")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            UIDatePicker.appearance().minuteInterval = 15
-        }
-        .alert(isPresented: $showAlert) {
-            Alert(
-                title: Text(isAppointmentScheduled ? "Sucesso" : "Ops, algo deu errado"),
-                message: Text(alertMessage),
-                dismissButton: .default(Text("OK, Entendi"), action: {
-                    if isAppointmentScheduled {
-                        dismiss()
-                    }
-                })
-            )
+//            .alert(isPresented: $showAlert) {
+//                Alert(
+//                    title: Text(isAppointmentScheduled ? "Sucesso" : "Ops, algo deu errado"),
+//                    message: Text(alertMessage),
+//                    dismissButton: .default(Text("OK, Entendi"), action: {
+//                        if isAppointmentScheduled {
+//                            dismiss()
+//                        }
+//                    })
+//                )
+//            }
         }
     }
     
     func scheduleAppointment() async {
         guard let patientID = authManager.patientID else { return }
         isAppointmentScheduled = false
-        defer { showAlert = true }
+        defer {
+            withAnimation {
+                showAlert = true
+            }
+        }
         do {
             let response = try await service.scheduleAppointment(specialistID: specialistId, patientID: patientID, date: selectedDate.convertToString())
             isAppointmentScheduled = true
