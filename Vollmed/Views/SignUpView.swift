@@ -26,8 +26,7 @@ struct SignUpView: View {
                     .padding(.vertical)
                 
                 Text("Olá, boas-vindas!")
-                    .font(.title2.bold())
-                    .foregroundStyle(.accent)
+                    .titleMdBoldStyle()
                 
                 Text("Insira seus dados para criar uma conta")
                     .font(.title3)
@@ -35,8 +34,7 @@ struct SignUpView: View {
                     .padding(.bottom)
                 
                 Text("Nome")
-                    .font(.title3.bold())
-                    .foregroundStyle(.accent)
+                    .titleMdBoldStyle()
                 
                 TextField("Insira seu nome completo", text: $viewModel.name)
                     .padding(14)
@@ -46,8 +44,7 @@ struct SignUpView: View {
                     .textInputAutocapitalization(.words)
                 
                 Text("E-mail")
-                    .font(.title3.bold())
-                    .foregroundStyle(.accent)
+                    .titleMdBoldStyle()
                 
                 TextField("Insira seu e-mail", text: $viewModel.email)
                     .padding(14)
@@ -58,8 +55,7 @@ struct SignUpView: View {
                     .textInputAutocapitalization(.never)
                 
                 Text("CPF")
-                    .font(.title3.bold())
-                    .foregroundStyle(.accent)
+                    .titleMdBoldStyle()
                 
                 TextField("Insira seu CPF", text: $viewModel.cpf)
                     .padding(14)
@@ -68,8 +64,7 @@ struct SignUpView: View {
                     .keyboardType(.numberPad)
                 
                 Text("Número de telefone")
-                    .font(.title3.bold())
-                    .foregroundStyle(.accent)
+                    .titleMdBoldStyle()
                 
                 TextField("Insira seu número de telefone", text: $viewModel.phoneNumber)
                     .padding(14)
@@ -78,8 +73,7 @@ struct SignUpView: View {
                     .keyboardType(.phonePad)
                 
                 Text("Selecione seu plano de saúde")
-                    .font(.title3.bold())
-                    .foregroundStyle(.accent)
+                    .titleMdBoldStyle()
                 
                 Picker("Plano de saúde", selection: $viewModel.healthPlan) {
                     ForEach(viewModel.healthPlans, id: \.self) { plan in
@@ -89,8 +83,7 @@ struct SignUpView: View {
                 }
                 
                 Text("Senha")
-                    .font(.title3.bold())
-                    .foregroundStyle(.accent)
+                    .titleMdBoldStyle()
                 
                 SecureField("Insira sua senha", text: $viewModel.password)
                     .padding(14)
