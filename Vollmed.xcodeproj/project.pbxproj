@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -28,9 +28,11 @@
 		9AF23E412DBAF7E000126521 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E402DBAF7E000126521 /* Login.swift */; };
 		9AF23E432DBAFBE500126521 /* UserDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E422DBAFBE500126521 /* UserDefaultsHelper.swift */; };
 		9AF23E452DBB070300126521 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF23E442DBB070300126521 /* KeychainHelper.swift */; };
+		F27323AF1E7D6C3FA4B89FFF /* Pods_Vollmed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8AC15CC688A8C8F4933B88 /* Pods_Vollmed.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E2090410644C416812A8B8B /* Pods-Vollmed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vollmed.release.xcconfig"; path = "Target Support Files/Pods-Vollmed/Pods-Vollmed.release.xcconfig"; sourceTree = "<group>"; };
 		484BEEFC2AB0F5750033C07A /* Specialist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Specialist.swift; sourceTree = "<group>"; };
 		484BEF002AB0F6090033C07A /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		484BEF022AB0F7080033C07A /* SpecialistCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistCardView.swift; sourceTree = "<group>"; };
@@ -40,6 +42,8 @@
 		48539DEE2AB0F47C005BD7C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		48539DF02AB0F47D005BD7C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		48539DF32AB0F47D005BD7C9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		5B8AC15CC688A8C8F4933B88 /* Pods_Vollmed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vollmed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		979BEFBAC4A466F74ED1C757 /* Pods-Vollmed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vollmed.debug.xcconfig"; path = "Target Support Files/Pods-Vollmed/Pods-Vollmed.debug.xcconfig"; sourceTree = "<group>"; };
 		9AF23E272DB9DBF100126521 /* ScheduleAppointmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAppointmentView.swift; sourceTree = "<group>"; };
 		9AF23E2E2DB9E79C00126521 /* ScheduleAppointment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAppointment.swift; sourceTree = "<group>"; };
 		9AF23E302DBA89F600126521 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
@@ -56,12 +60,48 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		9A03D4062DBC6D3A00E467CC /* SnackBarView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SnackBarView; sourceTree = "<group>"; };
-		9A03D4092DBC7E3100E467CC /* Skeleton */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Skeleton; sourceTree = "<group>"; };
-		9AF23E292DB9E54E00126521 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
-		9AF23E472DBB08AD00126521 /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
-		9AF23E4A2DBB982000126521 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
-		9AF23E4D2DBB9CC400126521 /* Networking */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Networking; sourceTree = "<group>"; };
+		9A03D4062DBC6D3A00E467CC /* SnackBarView */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = SnackBarView;
+			sourceTree = "<group>";
+		};
+		9A03D4092DBC7E3100E467CC /* Skeleton */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = Skeleton;
+			sourceTree = "<group>";
+		};
+		9AF23E292DB9E54E00126521 /* Extensions */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9AF23E472DBB08AD00126521 /* Managers */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		9AF23E4A2DBB982000126521 /* ViewModels */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		9AF23E4D2DBB9CC400126521 /* Networking */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F27323AF1E7D6C3FA4B89FFF /* Pods_Vollmed.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +169,8 @@
 			children = (
 				48539DEB2AB0F47C005BD7C9 /* Vollmed */,
 				48539DEA2AB0F47C005BD7C9 /* Products */,
+				7D061CD45115CBBB5D855C77 /* Pods */,
+				BDBD54866C04CE57508E47CD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -165,6 +208,23 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		7D061CD45115CBBB5D855C77 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				979BEFBAC4A466F74ED1C757 /* Pods-Vollmed.debug.xcconfig */,
+				0E2090410644C416812A8B8B /* Pods-Vollmed.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		BDBD54866C04CE57508E47CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5B8AC15CC688A8C8F4933B88 /* Pods_Vollmed.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -172,9 +232,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48539DF72AB0F47D005BD7C9 /* Build configuration list for PBXNativeTarget "Vollmed" */;
 			buildPhases = (
+				EE45EBD350198B4F429C1B56 /* [CP] Check Pods Manifest.lock */,
 				48539DE52AB0F47C005BD7C9 /* Sources */,
 				48539DE62AB0F47C005BD7C9 /* Frameworks */,
 				48539DE72AB0F47C005BD7C9 /* Resources */,
+				D341F0B39B0267B9156062FD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -209,7 +271,6 @@
 				};
 			};
 			buildConfigurationList = 48539DE42AB0F47C005BD7C9 /* Build configuration list for PBXProject "Vollmed" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -217,6 +278,7 @@
 				Base,
 			);
 			mainGroup = 48539DE02AB0F47C005BD7C9;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 48539DEA2AB0F47C005BD7C9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -237,6 +299,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D341F0B39B0267B9156062FD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Vollmed/Pods-Vollmed-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Vollmed/Pods-Vollmed-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Vollmed/Pods-Vollmed-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EE45EBD350198B4F429C1B56 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Vollmed-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		48539DE52AB0F47C005BD7C9 /* Sources */ = {
@@ -389,6 +493,7 @@
 		};
 		48539DF82AB0F47D005BD7C9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 979BEFBAC4A466F74ED1C757 /* Pods-Vollmed.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -396,6 +501,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Vollmed/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -418,6 +524,7 @@
 		};
 		48539DF92AB0F47D005BD7C9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0E2090410644C416812A8B8B /* Pods-Vollmed.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -425,6 +532,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Vollmed/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

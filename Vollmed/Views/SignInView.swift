@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import VollMedUI
 
 struct SignInView: View {
     
@@ -23,8 +24,7 @@ struct SignInView: View {
                 .frame(maxWidth: .infinity, maxHeight: 36, alignment: .center)
             
             Text("E-mail")
-                .font(.title3.bold())
-                .foregroundStyle(.accent)
+                .titleMdBoldStyle()
                 .padding(.top, 40)
             
             TextField("Insira seu e-mail", text: $viewModel.email)
@@ -36,21 +36,19 @@ struct SignInView: View {
                 .textInputAutocapitalization(.never)
             
             Text("Senha")
-                .font(.title3.bold())
-                .foregroundStyle(.accent)
+                .titleMdBoldStyle()
             
             SecureField("Insira sua senha", text: $viewModel.password)
                 .padding(14)
                 .background(Color.gray.opacity(0.25))
                 .cornerRadius(14)
             
-            Button {
+            Button("Entrar") {
                 Task {
                     await viewModel.signIn()
                 }
-            } label: {
-                ButtonView(text: "Entrar")
             }
+            .buttonStyle(ConfirmPrimaryButtonStyle())
             
             NavigationLink {
                 SignUpView()
